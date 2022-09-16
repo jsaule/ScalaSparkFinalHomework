@@ -1,7 +1,8 @@
+package jsaule
+
 import java.io.{File, FileWriter}
 import java.nio.file.{Files, Paths}
 import scala.io.Source
-
 
 object Util extends App {
 
@@ -40,14 +41,14 @@ object Util extends App {
   }
 
 
-  def getTextFromFile(src: String):String = {
+  def getTextFromFile(src: String): String = {
     val bufferedSource = Source.fromFile(src) //think of bufferedSource as a stream of bytes
     val text = bufferedSource.mkString //we convert this stream into actual string
     bufferedSource.close() //important to close the file
     text
   }
 
-  def getLinesFromFile(src: String):Array[String] = {
+  def getLinesFromFile(src: String): Array[String] = {
     val bufferedSource = Source.fromFile(src)
     val lines = bufferedSource.getLines().toArray
     bufferedSource.close()
@@ -57,9 +58,9 @@ object Util extends App {
   /**
    *
    * @param dstPath - save Path
-   * @param text - string to save
+   * @param text    - string to save
    */
-  def saveText(dstPath: String, text: String, append:Boolean=false, verbose:Boolean=false):Unit = {
+  def saveText(dstPath: String, text: String, append: Boolean = false, verbose: Boolean = false): Unit = {
     //    import java.io.{PrintWriter, File} //explicit import
     if (verbose) println(s"Saving ${text.length} characters to $dstPath")
     //so writing to file can be done either by overwriting the whole file (the default)
@@ -74,10 +75,10 @@ object Util extends App {
   /**
    *
    * @param dstPath - save Path
-   * @param lines - array of Strings to save
-   *              overwrites old file by default
+   * @param lines   - array of Strings to save
+   *                overwrites old file by default
    */
-  def saveLines(dstPath: String, lines: Array[String], append:Boolean=false, lineEnd:String="\n"):Unit = {
+  def saveLines(dstPath: String, lines: Array[String], append: Boolean = false, lineEnd: String = "\n"): Unit = {
     saveText(dstPath, lines.mkString(lineEnd), append)
   }
 
@@ -102,7 +103,7 @@ object Util extends App {
    * @param dst - destination file path
    * @return - returns text string from the url (could be txt, html, xml, json, etc)
    */
-  def getTextFromWebAndSave(url: String, dst: String):String = {
+  def getTextFromWebAndSave(url: String, dst: String): String = {
     val text = getTextFromWeb(url)
     saveText(dst, text)
     text //we return the text just in case we want to save and do some work as well
@@ -111,15 +112,16 @@ object Util extends App {
   /**
    * get a list of Files
    * adopted from https://alvinalexander.com/scala/how-to-list-files-in-directory-filter-names-scala/
-   * @param dir - listing path
+   *
+   * @param dir   - listing path
    * @param regex - match to filter by, default is all files of name length 1 or more
    * @return - returns list of Files
    */
-  def getListOfFiles(dir: String, regex:String=".*"):List[File] = {
+  def getListOfFiles(dir: String, regex: String = ".*"): List[File] = {
     val d = new File(dir)
     if (d.exists && d.isDirectory) {
       //      d.listFiles.filter(_.isFile).toList
-      d.listFiles.filter(file => file.isFile && file.getName.matches(regex) ).toList //FIXME regex
+      d.listFiles.filter(file => file.isFile && file.getName.matches(regex)).toList //FIXME regex
     } else {
       List[File]() //we return an empty list of Files if nothing is found
     }
@@ -130,7 +132,7 @@ object Util extends App {
    * @param filePath
    * @return true or false whether file exists at the location
    */
-  def isFileTHere(filePath:String):Boolean = {
+  def isFileTHere(filePath: String): Boolean = {
     val path = Paths.get(filePath)
     Files.exists(path)
   }
@@ -141,12 +143,12 @@ object Util extends App {
    * @param newLine
    * @return
    */
-  def getCharacterCount(lines: Array[String], newLine:String="\n"):Int = {
+  def getCharacterCount(lines: Array[String], newLine: String = "\n"): Int = {
     lines.mkString(newLine).length //we build up a string and return its length
   }
 
   //return wordCount for each Line
-  def getWordCountPerLine(lines: Array[String], sep:String=" +"):Array[Int] = {
+  def getWordCountPerLine(lines: Array[String], sep: String = " +"): Array[Int] = {
     val wordsLines = lines.map(_.split(sep)) //so we get an Array of Array of words
     val wordsPerLine = wordsLines.map(_.length)
     wordsPerLine

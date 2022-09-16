@@ -1,4 +1,6 @@
-import SparkUtil.{getSpark, readDataWithView}
+package jsaule
+
+import jsaule.SparkUtil.{getSpark, readDataWithView}
 import org.apache.spark.sql.functions.{col, lit}
 
 /**

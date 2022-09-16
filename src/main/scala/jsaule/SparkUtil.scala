@@ -1,3 +1,5 @@
+package jsaule
+
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 object SparkUtil extends App {

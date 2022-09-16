@@ -1,5 +1,6 @@
-import SparkUtil.{getSpark, readDataWithView}
-import org.apache.spark.sql.functions.{avg, col, desc, expr, lit, percent_rank, round, sqrt, stddev, sum, to_date, to_timestamp, when}
+package jsaule
+
+import jsaule.SparkUtil.{getSpark, readDataWithView}
 import org.apache.spark.ml.classification.{LogisticRegression, LogisticRegressionModel}
 import org.apache.spark.ml.evaluation.{MulticlassClassificationEvaluator, RegressionEvaluator}
 import org.apache.spark.ml.feature.{OneHotEncoder, RFormula, StringIndexer, VectorAssembler}
@@ -9,7 +10,7 @@ import org.apache.spark.ml.{Pipeline, PipelineModel}
 import org.apache.spark.mllib.evaluation.RegressionMetrics
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.expressions.Window
-
+import org.apache.spark.sql.functions._
 
 /**
  * object for analyzing dataframe
@@ -221,8 +222,8 @@ object Main extends App {
 
   /**
    * @return builds linear regression model predicting next days close value and
-   * prints dataframe with predicted close value of a stock,
-   * saves best linear regression model to a directory
+   *         prints dataframe with predicted close value of a stock,
+   *         saves best linear regression model to a directory
    * @param df         dataframe
    * @param printLines how many lines to print, default 20
    */
